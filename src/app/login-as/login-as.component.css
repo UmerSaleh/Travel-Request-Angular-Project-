@@ -1,0 +1,12 @@
+body {
+    background: linear-gradient(to right, #687864 3%, #31708e 50%, #687864 97%);
+}
+
+.border-brown {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.login-title {
+    color: #687864;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

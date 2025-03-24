@@ -1,0 +1,72 @@
+<!-- navigation bar -->
+<header>
+    <nav class="navbar navbar-light">
+        <div class="container-fluid">
+            <!-- Dropdown Menu -->
+            <div class="nav-item dropdown text-light">
+                <a class="nav-link text-light" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-bars fs-5"
+                        aria-hidden="true"></i>&nbsp; <span class=".d-sm-none .d-md-block">Employee
+                        Configuration</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" >Employee Configuration</a></li>
+                    <li><a class="dropdown-item" routerLink="/admin/dashboard/" >Travel Requests</a></li>
+                </ul>
+            </div>
+
+            <!-- Administrator Dropdown -->
+            <form class="d-flex ">
+                <div class="dropdown">
+                    <a class="btn dropdown-toggle text-light opacity-100" role="button" id="adminMenu"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin &nbsp;&nbsp;<i class="fa fa-user fs-4 " aria-hidden="true"></i>
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="adminMenu">
+                        <li><a class="dropdown-item" (click)="logout()">Log Out &nbsp;&nbsp;<i class="fa fa-sign-out"
+                                    aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </nav>
+</header>
+
+
+<main class="container">
+    <!-- Section with Add Employee & Search Bar -->
+    <section class="row mt-3">
+        <div class="col-md-4">
+            <button class="btn btn-success float-left btn-new p-2 mb-2" (click)="GotoCreation()">Create Employee/Manager</button>
+        </div>
+        <form class="d-flex col-md-8 float-end">
+            <input class="form-control me-2" type="search" [formControl]="searchName" (keydown.enter)="onEnter($event)" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="button" aria-label="Search Button" (click)="processEmployees()">Search</button>
+        </form>
+    </section>
+    
+    <!-- Employee Cards Section -->
+    <div class="employee-container">
+        <section class="row mt-4">
+            <!-- "Employee Card" -->
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let employee of employee_data">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="assets/imgs/account.png" class="img-fluid rounded-start" alt="User Demo Image">
+                                <button class="btn btn-success btn-new w-100 m-1" (click)="viewEmployee(employee.id)">View</button>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ employee.user?.first_name || employee.user.username }} {{ employee.user?.last_name || ' ' }}</h5>
+                                    <p class="card-text"><small class="text-muted">{{ employee.is_manager ? 'Manager' : 'Employee' }}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>

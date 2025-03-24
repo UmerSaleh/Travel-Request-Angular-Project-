@@ -1,0 +1,37 @@
+<!-- Navigation Bar -->
+<header>
+    <nav class="navbar navbar-light" aria-label="Employee Navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light opacity-75" routerLink="/admin/employee-dashboard/" aria-label="Go Back">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </a>
+            <form class="d-flex ">
+                <div class="dropdown">
+                    <a class="btn dropdown-toggle text-light opacity-100" href="#" role="button" id="dropdownMenuLink"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Administrator &nbsp;&nbsp;<i class="fa fa-user fs-4 " aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item">Log Out &nbsp;&nbsp;<i class="fa fa-sign-out"
+                                    aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </nav>
+</header>
+
+<div class="d-flex justify-content-center align-items-center m-5">
+
+    <div class="center-box mt-5">
+        <div class="m-5">   </div>
+        <h4 class="text-primary text-center mt-5 ">Hi, Admin</h4>
+        <h1 class="fw-bold text-center">Welcome</h1>
+        <p class="text-center">This is an admin page</p>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="/dashboard" class="btn btn-primary">Request Dashboard</a>
+            <a href="/employee-config" class="btn btn-secondary">Employee Configuration</a>
+        </div>
+    </div>
+
+</div>

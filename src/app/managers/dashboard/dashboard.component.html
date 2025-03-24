@@ -1,0 +1,237 @@
+<!-- Navigation Bar -->
+  <header>
+    <nav class="navbar navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand text-light fs-6">Travel Requests</a>
+        <div class="dropdown">
+          <a class="btn dropdown-toggle text-light opacity-100" role="button" id="dropdownMenuLink"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            {{ manager_name }} &nbsp;&nbsp;<i class="fa fa-user fs-4 " aria-hidden="true"></i>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" (click)="logout()">Log Out &nbsp;&nbsp;<i class="fa fa-sign-out"
+                  aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Search and Filters -->
+    <form class="d-flex col-md-12 mx-auto mt-3">
+      <input class="form-control me-2" type="search" [formControl]="searchName" (keydown.enter)="onEnter($event)" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="button" aria-label="Search Button" (click)="processRequests()">Search</button>
+    </form>
+
+    <!-- filter and sort -->
+    <form class="d-grid gap-2 d-md-flex justify-content-md-end mt-2 ms-auto">
+      <!-- Filter -->
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="filter" data-bs-toggle="dropdown"
+          aria-expanded="false" aria-label="Filter By">
+          Filter By
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="filter">
+          <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#Date-filter"> Date Range</button></li>
+          <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#Status-filter"> Status</button></li>
+        </ul>
+      </div>
+      <!-- Sort -->
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sort" data-bs-toggle="dropdown"
+          aria-expanded="false" aria-label="Sort By">
+          Sort By
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="sort">
+          <li><a class="dropdown-item" (click)="selectSort('date_of_request')">Applied Date (ASC)</a></li>
+          <li><a class="dropdown-item" (click)="selectSort('-date_of_request')">Applied Date (DESC)</a></li>
+          <li><a class="dropdown-item" (click)="selectSort('from_dates')">Travel Date (ASC)</a></li>
+          <li><a class="dropdown-item" (click)="selectSort('-from_dates')">Travel Date (DESC)</a></li>
+        </ul>
+      </div>
+    </form>
+
+
+    <!-- table of travel requests -->
+    <div class="table-responsive mt-4 mx-auto" aria-label="Travel Requests Table">
+      <table class="table tabel-hover text-center">
+        <thead class="table-secondary border-1">
+          <tr>
+            <th>Date of request</th>
+            <th>Name</th>
+            <th>Purpose</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of request_data">
+            <td>{{ request.date_of_request | date: 'shortDate' }}</td>
+            <td>{{ request.employee.user.username}} {{ request.employee.user.first_name}} {{ request.employee.user.last_name}}</td>
+            <td>{{ request.purpose_of_travel }}</td>
+            <td>{{ request.from_where }}</td>
+            <td>{{ request.to_where }}</td>
+            <td>{{ request.status_of_request }}
+              <span class="text-light bg-success rounded-pill border p-1" 
+                *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 1 && request.status_of_request === 'reverted'">
+                Resubmitted
+              </span>
+              
+              <span class="text-light bg-warning rounded-pill border p-1" 
+                *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 0 && request.status_of_request === 'reverted'">
+                Subject to Resubmit
+              </span>   
+            </td>
+            <td class="action-buttons">
+              <button class="btn btn-outline-dark me-1" aria-label="View Request" (click)="view(request.id)">View</button>
+              <button class="btn btn-outline-danger me-1" *ngIf="request.status_of_request == 'submitted' || (request.status_of_request == 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'reject')" data-bs-toggle="modal" data-bs-target="#Rejection"
+                aria-label="Reject Request">Reject</button>
+              <button class="btn btn-outline-dark me-1" *ngIf="request.status_of_request == 'submitted' || (request.status_of_request == 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'revert')" data-bs-toggle="modal" data-bs-target="#Revert"
+                aria-label="Revert Request">Revert</button>
+              <button class="btn btn-outline-success" *ngIf="request.status_of_request == 'submitted' || (request.status_of_request == 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'approve')" data-bs-toggle="modal" data-bs-target="#Approve"
+                aria-label="Approve Request">Approve</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Modals -->
+  <!-- Modal for rejection -->
+  <div class="modal fade" id="Rejection" tabindex="-1" aria-labelledby="rejectionModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rejectionModal">Confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="container form-group row p-3 mb-2">
+          <label for="noteOnRejection" class="col-sm-2 col-form-label">Note : </label>
+          <div class="col-sm-10">
+            <textarea #noteOnRejection name="note" id="noteOnRejection" class="form-control" aria-label="note on rejection"></textarea>
+          </div>
+        </div>
+        <div class="modal-body p-3">
+          Do you really want to continue with the Rejection?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  (click)="takeAction(noteOnRejection.value)">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal for approval -->
+  <div class="modal fade" id="Approve" tabindex="-1" aria-labelledby="approveModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="approveModal">Confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="container form-group row p-3 mb-2">
+          <label for="noteOnApprove" class="col-sm-2 col-form-label">Note : </label>
+          <div class="col-sm-10">
+            <textarea #noteOnApprove name="noteOnApprove" id="noteOnApprove" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="modal-body p-3">
+          Do you really want to Approve?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="takeAction(noteOnApprove.value)">Approve</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal for reverting -->
+  <div class="modal fade" id="Revert" tabindex="-1" aria-labelledby="revertModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="revertModal">Confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row p-3 mb-2">
+            <label for="noteOnRevert" class="col-sm-2 col-form-label">Note : </label>
+            <div class="col-sm-10">
+              <textarea #noteOnRevert name="noteOnRevert" id="noteOnRevert" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="modal-body p-3">
+            Do you really want to Revert?
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="takeAction(noteOnRevert.value)">Revert</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal for Date Filter -->
+  <div class="modal fade" id="Date-filter" tabindex="-1" aria-labelledby="dateModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="dateModal">Choose the Date range</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row p-3">
+            <label for="dateRange" class="col-sm-3 col-form-label">Date Range : </label>
+            <div class="col-sm-4">
+              <input type="date" class="form-control" id="startDate" [formControl]="startDate" aria-label="Start date">
+            </div>
+            <div class="col-sm-1 pt-1  text-center">
+              <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            </div>
+            <div class="col-sm-4">
+              <input type="date" class="form-control" id="endDate" [formControl]="endDate" aria-label="End date">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="applyDateFilter()">Apply filter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Status Filter -->
+  <div class="modal fade" id="Status-filter" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="statusModal">Choose the Date range</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="dropdown">
+            <!-- <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="Filterby" data-bs-toggle="dropdown"
+              aria-expanded="false" aria-label="Filter by">
+              Filter By
+            </button> -->
+            
+              <a class="dropdown-item" (click)="selectFilter('submitted')">Submitted</a>
+              <a class="dropdown-item" (click)="selectFilter('approved')">Approved</a>
+              <a class="dropdown-item" (click)="selectFilter('reverted')">Reverted</a>
+              <a class="dropdown-item" (click)="selectFilter('rejected')">Rejected</a>
+              <a class="dropdown-item" (click)="selectFilter('closed')">Closed</a>
+            
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Apply filter</button>
+        </div>
+      </div>
+    </div>
+  </div>

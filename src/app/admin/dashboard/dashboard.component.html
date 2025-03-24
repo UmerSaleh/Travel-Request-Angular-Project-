@@ -1,0 +1,223 @@
+<!-- navigation bar -->
+<header>
+    <nav class="navbar navbar-light">
+        <div class="container-fluid">
+            <!-- Sidebar Toggle Dropdown -->
+            <div class="nav-item dropdown text-light">
+                <a class="nav-link text-light" role="button" data-bs-toggle="dropdown"><i class=" fa fa-bars fs-6"
+                        aria-hidden="true"></i> &nbsp; Travel Requests</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" routerLink="/admin/employee-dashboard/">Employee Configuration</a></li>
+                    <li><a class="dropdown-item">Travel Requests</a></li>
+                </ul>
+            </div>
+            <!-- Admin Profile Dropdown -->
+            <form class="d-flex ">
+                <div class="dropdown">
+                    <a class="btn dropdown-toggle text-light opacity-100" role="button" id="adminDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Administrator &nbsp;&nbsp;<i class="fa fa-user fs-4 " aria-hidden="true"></i>
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                        <li><a class="dropdown-item" (click)="logout()">Log Out &nbsp;&nbsp;<i class="fa fa-sign-out"
+                                    aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </nav>
+</header>
+
+<div class="d-flex justify-content-center align-items-center">
+
+  <div class="center-box">
+
+      <h4 class="text-primary text-center mt-5 ">Hi, Admin</h4>
+      <h1 class="fw-bold text-center">Welcome</h1>
+      <p class="text-center">This is an admin page</p>
+      <div class="d-flex justify-content-center gap-3 mt-3">
+          <a routerLink="/admin/employee-dashboard/" class="btn btn-secondary">Go to Employee Configuration</a>
+      </div>
+  </div>
+
+</div>
+<main class="container">
+
+  <!-- <h2 class="text-center mb-4">Admin Dashboard</h2>
+  
+    Navigation Buttons -->
+    <!-- <div class="row justify-content-center">
+      <div class="col-md-4 mb-4">
+        <a href="/admin/travel-requests" class="btn btn-lg btn-primary w-100">Travel Requests Dashboard</a>
+      </div>
+      <div class="col-md-4 mb-4">
+        <a href="/admin/employee-configuration" class="btn btn-lg btn-success w-100">Employee Configuration</a>
+      </div>
+    </div>
+    <section class="mt-5 text-center">
+      <p>Welcome, Admin! You can manage travel requests, employee configurations, and more.</p>
+    </section>   -->
+    <!-- Search & Filter Section -->
+    <section class="row mt-3">
+        <form class="d-flex col-md-12 mx-auto mt-3">
+            <input class="form-control me-2" type="search" [formControl]="searchName" (keydown.enter)="onEnter($event)" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="button" aria-label="Search Button" (click)="processRequests()">Search</button>
+        </form>
+        <!-- Filter Dropdown -->
+        <form class="d-grid gap-2 d-md-flex justify-content-md-end mt-2 ms-auto">
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="filter"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Filter By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="filter">
+                    <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#Date-filter"> Date Range</button></li>
+                    <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#Status-filter"> Status</button></li>
+                </ul>
+            </div>
+            <!-- Sort Dropdown -->
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sort" data-bs-toggle="dropdown"
+                  aria-expanded="false" aria-label="Sort By">
+                  Sort By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sort">
+                  <li><a class="dropdown-item" (click)="selectSort('date_of_request')">Applied Date (ASC)</a></li>
+                  <li><a class="dropdown-item" (click)="selectSort('-date_of_request')">Applied Date (DESC)</a></li>
+                  <li><a class="dropdown-item" (click)="selectSort('from_dates')">Travel Date (ASC)</a></li>
+                  <li><a class="dropdown-item" (click)="selectSort('-from_dates')">Travel Date (DESC)</a></li>
+                </ul>
+            </div>
+        </form>
+    </section>
+    <!-- Travel Requests Table -->
+    <section class="table-responsive mt-4 mx-auto" aria-label="Travel Request Table">
+        <table class="table tabel-hover text-center">
+            <thead class="table-secondary border-1">
+                <tr>
+                    <th>Date of request</th>
+                    <th>Name</th>
+                    <th>Purpose</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let request of request_data">
+                    <td>{{ request.date_of_request ? (request.date_of_request | date: 'shortDate') : ' ' }}</td>
+                    <td>{{ request.employee?.user?.first_name || ' ' }} {{ request.employee?.user?.last_name || ' ' }}</td>
+                    <td>{{ request.purpose_of_travel }}</td>
+                    <td>{{ request.from_where || ' ' }}</td>
+                    <td>{{ request.to_where || ' ' }}</td>
+                    <td>{{ request.status_of_request || ' ' }}
+                        <span class="text-light bg-success rounded-pill border p-1" 
+                            *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 1 && request.status_of_request === 'reverted'">
+                            Resubmitted
+                        </span>
+                        
+                        <span class="text-light bg-warning rounded-pill border p-1" 
+                            *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 0 && request.status_of_request === 'reverted'">
+                          Subject to resubmission
+                        </span>  
+                    </td>
+                    <td class="action-buttons">
+                        <button class="btn btn-outline-dark me-1" aria-label="View Request" (click)="view(request.id)">View</button>
+                        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#Close"
+                            aria-label="Close Request" *ngIf="request.status_of_request === 'approved'" (click)="beforeClose(request.id)">Close Request</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>  
+</main>
+
+<!-- modal for closing -->
+<div class="modal fade" id="Close" tabindex="-1" aria-labelledby="closeModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="closeModal">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row p-3 mb-2">
+                    <label for="noteOnClose" class="col-sm-2 col-form-label">Note : </label>
+                    <div class="col-sm-10">
+                        <textarea #noteOnClose name="noteOnClose" id="noteOnClose" class="form-control"
+                            aria-label="Note on Close Request"></textarea>
+                    </div>
+                </div>
+                <div class="modal-body p-3">
+                    Do you really want to Close the request?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="takeClose(noteOnClose.value)">Close Request</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for Date Filter -->
+<div class="modal fade" id="Date-filter" tabindex="-1" aria-labelledby="dateModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="dateModal">Choose the Date range</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row p-3">
+            <label for="dateRange" class="col-sm-3 col-form-label">Date Range : </label>
+            <div class="col-sm-4">
+              <input type="date" class="form-control" id="startDate" [formControl]="startDate" aria-label="Start date">
+            </div>
+            <div class="col-sm-1 pt-1  text-center">
+              <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            </div>
+            <div class="col-sm-4">
+              <input type="date" class="form-control" id="endDate" [formControl]="endDate" aria-label="End date">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="applyDateFilter()">Apply filter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Status Filter -->
+  <div class="modal fade" id="Status-filter" tabindex="-1" aria-labelledby="statusModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="statusModal">Choose the Date range</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="dropdown">
+            <!-- <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="Filterby" data-bs-toggle="dropdown"
+              aria-expanded="false" aria-label="Filter by">
+              Filter By
+            </button> -->
+            
+              <a class="dropdown-item" (click)="selectFilter('submitted')">Submitted</a>
+              <a class="dropdown-item" (click)="selectFilter('approved')">Approved</a>
+              <a class="dropdown-item" (click)="selectFilter('reverted')">Reverted</a>
+              <a class="dropdown-item" (click)="selectFilter('rejected')">Rejected</a>
+              <a class="dropdown-item" (click)="selectFilter('closed')">Closed</a>
+            
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Apply filter</button>
+        </div>
+      </div>
+    </div>
+  </div>
