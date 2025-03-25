@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
     request_data: any;
     selectedRequestId: number | any;
 

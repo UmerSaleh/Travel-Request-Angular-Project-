@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './dash-employee.component.html',
   styleUrl: './dash-employee.component.css'
 })
-export class DashEmployeeComponent {
+export class DashEmployeeComponent implements OnInit {
   employee_data: any;
   selectedEmployeeId: number | null = null;
 

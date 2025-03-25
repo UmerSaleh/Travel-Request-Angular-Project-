@@ -1,4 +1,12 @@
-
+.bg-wrapper {
+    /* background-image: url('/assets/imgs/pexels-jaymantri-5412.jpg'); */
+    background-image: url('/assets/imgs/pexels-stywo-1054218.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+}
 
 .border-brown {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);

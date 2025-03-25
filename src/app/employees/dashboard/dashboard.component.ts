@@ -1,4 +1,4 @@
-  import { Component } from '@angular/core';
+  import { Component, OnInit } from '@angular/core';
   import { EmployeeService } from '../../services/employee.service';
   import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
@@ -9,7 +9,7 @@ import { LoginService } from '../../services/login.service';
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css'
   })
-  export class DashboardComponent {
+  export class DashboardComponent implements OnInit {
     request_data: any
     employee_name: string | undefined;
     selectedRequestId: number | null = null;

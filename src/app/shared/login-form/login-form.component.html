@@ -1,36 +1,38 @@
-<main class="container mt-5" >
-    <div class="row justify-content-center">
-        <div class="col-md-4 mt-4">
-            <div class="card border-brown mt-5 pb-4">
-                <div class="card-body p-5">
-                    <form id="registrationForm" [formGroup]="loginForm" (ngSubmit)="login()">
-                        <h1 class="fs-3 text-center login-title">{{title}}</h1>
-                        <div *ngIf="errorMessage" class="error-message text-center text-danger">
-                            {{ errorMessage }}
-                          </div>
-                        <!-- email input -->
-                        <div class="form-group mt-5">
-                            <label for="username"  class="form-label visually-hidden">Username</label>
-                            <input type="text" formControlName="username" name="username" class="form-control border-brown" id="username"
-                                placeholder="Username" required maxlength="45" aria-required="true" />
-                        </div>
-                        <!-- password input -->
-                        <div class="form-group mt-4">
-                            <label for="password" class="form-label visually-hidden">Password</label>
-                            <input type="password" formControlName="password" name="password" class="form-control border-brown" id="password"
-                                placeholder="Password" required aria-required="true" />
-                        </div>
-                        <button class="btn btn-success btn-new w-100 mt-5" type="submit" aria-label="Log in">
-                            Log in
-                        </button>
-                        <div class="form-group mt-4">
-                            <span>Want to login as other? </span> 
-                            <a routerLink="/login-as" class="btn-link">Go back</a>
-                        </div>
-
-                    </form>
+<div class="container-fluid bg-wrapper">
+    <main class="container" >
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-4">
+                <div class="card border-brown mt-5 pb-4">
+                    <div class="card-body p-5">
+                        <form id="registrationForm" [formGroup]="loginForm" (ngSubmit)="login()">
+                            <h1 class="fs-3 text-center login-title">{{title}}</h1>
+                            <div *ngIf="errorMessage" class="error-message text-center text-danger">
+                                {{ errorMessage }}
+                              </div>
+                            <!-- email input -->
+                            <div class="form-group mt-5">
+                                <label for="username"  class="form-label visually-hidden">Username</label>
+                                <input type="text" formControlName="username" name="username" class="form-control border-brown" id="username"
+                                    placeholder="Username" required maxlength="45" aria-required="true" />
+                            </div>
+                            <!-- password input -->
+                            <div class="form-group mt-4">
+                                <label for="password" class="form-label visually-hidden">Password</label>
+                                <input type="password" formControlName="password" name="password" class="form-control border-brown" id="password"
+                                    placeholder="Password" required aria-required="true" />
+                            </div>
+                            <button class="btn btn-success btn-new w-100 mt-5" type="submit" aria-label="Log in">
+                                Log in
+                            </button>
+                            <div class="form-group mt-4">
+                                <span>Want to login as other? </span> 
+                                <a routerLink="/login-as" class="btn-link">Go back</a>
+                            </div>
+    
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
+</div>

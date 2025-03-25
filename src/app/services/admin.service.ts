@@ -16,7 +16,7 @@ export class AdminService {
   URL = 'http://127.0.0.1:8000/api/admin/requests/'
 
   getData(): Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -25,7 +25,7 @@ export class AdminService {
     return this.http.get(this.URL, {headers});
   }
   getTravelRequest(request_id:number):Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -34,7 +34,7 @@ export class AdminService {
   }
 
   getEmployee(employee_id:number):Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -43,7 +43,7 @@ export class AdminService {
   }
 
   getEmployeeData(): Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -53,7 +53,7 @@ export class AdminService {
 
   processEmployees(filter:any): Observable<any> {
     let params = new HttpParams();
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -66,7 +66,7 @@ export class AdminService {
   }
 
   createNewEmployee(data:any): Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -74,7 +74,7 @@ export class AdminService {
     return this.http.post<any>(`http://127.0.0.1:8000/api/admin/employees/new/`,data, {headers})
   }
   updateEmployee(employee_id:number,value:any):Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -84,7 +84,7 @@ export class AdminService {
 
   processRequests(filters: any): Observable<any> {
       let params = new HttpParams();
-      let token = this.getToken();
+      const token = this.getToken();
       if (!token) {
         console.error("No token found in localStorage");
       }
@@ -102,7 +102,7 @@ export class AdminService {
 
 
   takeClose(request_id:number, note:string): Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -117,7 +117,7 @@ export class AdminService {
   }
 
   deleteEmployee(employee_id:number): Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }

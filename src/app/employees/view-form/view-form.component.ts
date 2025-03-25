@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../../services/employee.service';
 import { ActivatedRoute } from '@angular/router';
@@ -9,7 +9,7 @@ import { LoginService } from '../../services/login.service';
   templateUrl: './view-form.component.html',
   styleUrl: './view-form.component.css'
 })
-export class ViewFormComponent {
+export class ViewFormComponent implements OnInit {
   travelRequestForm!: FormGroup;
     data: any;
     employeeName: string | undefined;

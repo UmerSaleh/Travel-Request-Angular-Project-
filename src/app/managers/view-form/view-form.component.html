@@ -10,7 +10,7 @@
                   {{managerName}}  &nbsp;&nbsp;<i class="fa fa-user fs-4 " aria-hidden="true"></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <li><a class="dropdown-item" (click)="logout()">Log Out &nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                  <li tabIndex={0}><a class="dropdown-item" (click)="logout()">Log Out &nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
                 </ul>
             </div>
         </form>
@@ -141,9 +141,9 @@
         </div>
         <!-- submit buttons -->
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
-          <button class="btn btn-outline-dark " *ngIf="status == 'submitted' || (status == 'reverted' && resubmission == true)" (click)="beforeAction('revert')" data-bs-toggle="modal" data-bs-target="#Revert">Revert</button>
-          <button class="btn btn-success btn-reject" *ngIf="status == 'submitted' || (status == 'reverted' && resubmission == true)" (click)="beforeAction('reject')" data-bs-toggle="modal" data-bs-target="#Rejection">Reject</button>
-          <button class="btn btn-success btn-new" *ngIf="status == 'submitted' || (status == 'reverted' && resubmission == true)" (click)="beforeAction('approve')" data-bs-toggle="modal" data-bs-target="#Approve">Approve</button>
+          <button class="btn btn-outline-dark " *ngIf="status === 'submitted' || (status === 'reverted' && resubmission == true)" (click)="beforeAction('revert')" data-bs-toggle="modal" data-bs-target="#Revert">Revert</button>
+          <button class="btn btn-success btn-reject" *ngIf="status === 'submitted' || (status === 'reverted' && resubmission == true)" (click)="beforeAction('reject')" data-bs-toggle="modal" data-bs-target="#Rejection">Reject</button>
+          <button class="btn btn-success btn-new" *ngIf="status === 'submitted' || (status === 'reverted' && resubmission == true)" (click)="beforeAction('approve')" data-bs-toggle="modal" data-bs-target="#Approve">Approve</button>
         </div>
     </form>
 </section>

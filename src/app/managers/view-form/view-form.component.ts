@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ManagerService } from '../../services/manager.service';
 import { ActivatedRoute } from '@angular/router';
-import { AdminService } from '../../services/admin.service';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -10,7 +9,7 @@ import { LoginService } from '../../services/login.service';
   templateUrl: './view-form.component.html',
   styleUrl: './view-form.component.css'
 })
-export class ViewFormComponent {
+export class ViewFormComponent implements OnInit {
     travelRequestForm!: FormGroup;
     data: any;
     employeeName: string | undefined;

@@ -15,7 +15,7 @@ export class ManagerService {
 
   URL = 'http://127.0.0.1:8000/api/manager/requests/'
   getData(): Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -26,7 +26,7 @@ export class ManagerService {
 
   processRequests(filters: any): Observable<any> {
     let params = new HttpParams();
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -43,7 +43,7 @@ export class ManagerService {
   }
 
   getTravelRequest(request_id:number):Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -52,7 +52,7 @@ export class ManagerService {
   }
 
   takeAction(request_id:number, action:string, note:string): Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }

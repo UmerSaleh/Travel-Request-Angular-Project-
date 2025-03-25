@@ -106,8 +106,8 @@
         <div class="col-sm-10">
           <select class="form-control" id="travelMode" formControlName="mode_of_travel" aria-label="Select mode of travel">
             <option selected>Choose...</option>
-            <option value="train">On Train</option>
             <option value="flight">On Flight</option>
+            <option value="train">On Train</option>
             <option value="own vehicle">On own Vehicle</option>
             <option value="ship">On Ship</option>
           </select>
@@ -160,9 +160,9 @@
       </div>
       <!-- submit buttons -->
       <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
-        <button class="btn btn-secondary " *ngIf="status=='to_submit'" data-bs-toggle="modal" data-bs-target="#Discard">Discard</button>
-        <button class="btn btn-secondary " *ngIf="status=='submitted'" routerLink="/employees/dashboard/">Close</button>
-        <button class="btn btn-success btn-new" data-bs-toggle="modal" *ngIf="status=='to_submit'"  data-bs-target="#Submit">Submit</button>
+        <button class="btn btn-secondary " *ngIf="status==='to_submit'" data-bs-toggle="modal" data-bs-target="#Discard">Discard</button>
+        <button class="btn btn-secondary " *ngIf="status==='submitted'" routerLink="/employees/dashboard/">Close</button>
+        <button class="btn btn-success btn-new" data-bs-toggle="modal" *ngIf="status==='to_submit'"  data-bs-target="#Submit">Submit</button>
       </div>
     </form>
   </main>

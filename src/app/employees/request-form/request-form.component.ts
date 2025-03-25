@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { EmployeeService } from '../../services/employee.service';
 import { LoginService } from '../../services/login.service';
 
@@ -9,7 +9,7 @@ import { LoginService } from '../../services/login.service';
   templateUrl: './request-form.component.html',
   styleUrl: './request-form.component.css'
 })
-export class RequestFormComponent {
+export class RequestFormComponent implements OnInit {
   travelRequestForm!: FormGroup;
   data: any;
   employeeName: string | undefined;
@@ -19,7 +19,8 @@ export class RequestFormComponent {
   constructor(private employeeService:EmployeeService, private loginService:LoginService){}
 
   ngOnInit(): void {
-    this.loadEmployeeDetails();
+    this.status = "to_submit";
+    
     this.travelRequestForm = new FormGroup({
       name: new FormControl('',Validators.required),
       purpose_of_travel: new FormControl('', Validators.required),
@@ -34,8 +35,10 @@ export class RequestFormComponent {
       lodging_info: new FormControl(''),
       additional_info: new FormControl('')
     }
+
   )
-    this.status = "to_submit"
+
+    this.loadEmployeeDetails();
   }
 
   loadEmployeeDetails() {

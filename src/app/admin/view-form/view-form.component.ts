@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { ActivatedRoute } from '@angular/router';
 import { LoginService } from '../../services/login.service';
-ReactiveFormsModule
+
 
 @Component({
   selector: 'app-view-form',
   templateUrl: './view-form.component.html',
   styleUrl: './view-form.component.css'
 })
-export class ViewFormComponent {
+export class ViewFormComponent implements OnInit {
       travelRequestForm!: FormGroup;
       data: any;
       employeeName: string | undefined;

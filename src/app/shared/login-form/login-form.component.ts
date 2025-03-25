@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -10,8 +9,8 @@ import { RouterModule } from '@angular/router';
   styleUrl: './login-form.component.css'
 })
 export class LoginFormComponent {
-  @Input() title: string = 'Login Portal';
-  errorMessage: string = '';
+  @Input() title = 'Login Portal';
+  errorMessage = '';
 
   loginForm = new FormGroup({
     username: new FormControl('',Validators.required),

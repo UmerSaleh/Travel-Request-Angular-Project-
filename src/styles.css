@@ -1,0 +1,82 @@
+.employee-container{
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    gap: 15px;
+}
+
+.employee-card {
+    /* flex: 1 1 calc(33.33% - 15px); */
+    /* max-width: calc(33.33% - 15px); */
+    width: 500px;
+  }
+
+
+.active{
+    background-color: #818381 !important;
+    color: white !important;
+}
+
+.fa-sign-out {
+    color: #535a51 !important;
+}
+
+/* Button Success */
+.btn-success {
+    background-color: #31708e !important;
+    border-color: #31708e !important;
+    color: white !important; /* Ensure text is visible */
+}
+
+.text-primary{
+    color: #31708e !important;
+}
+
+
+
+.btn-success:hover, 
+.btn-success:focus, 
+.btn-success:active {
+    background-color: #285a7d !important; /* Darker shade for hover */
+    border-color: #285a7d !important;
+}
+
+/* Button Outline Danger */
+.btn-outline-danger {
+    color: rgb(167, 70, 70) !important;
+    border-color: rgb(167, 70, 70) !important;
+}
+.btn-outline-danger:hover, 
+.btn-outline-danger:focus, 
+.btn-outline-danger:active {
+    background-color: rgb(167, 70, 70) !important;
+    color: white !important;
+}
+
+/* Button Outline Dark */
+.btn-outline-dark {
+    color: #535a51 !important;
+    border-color: #535a51 !important;
+}
+.btn-outline-dark:hover, 
+.btn-outline-dark:focus, 
+.btn-outline-dark:active {
+    background-color: #535a51 !important;
+    color: white !important;
+}
+
+/* Button Outline Success */
+.btn-outline-success {
+    color: #31708e !important;
+    border-color: #31708e !important;
+}
+.btn-outline-success:hover, 
+.btn-outline-success:focus, 
+.btn-outline-success:active {
+    background-color: #31708e !important;
+    color: white !important;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #687864 !important;
+}

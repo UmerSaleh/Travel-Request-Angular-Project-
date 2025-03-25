@@ -1,3 +1,14 @@
+.bg-wrapper {
+    /* background-image: url('/assets/imgs/pexels-jaymantri-5412.jpg'); */
+    background-image: url('/assets/imgs/pexels-stywo-1054218.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+}
+
+
 body {
     background: linear-gradient(to right, #687864 3%, #31708e 50%, #687864 97%);
 }
@@ -10,3 +21,4 @@ body {
     color: #687864;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+

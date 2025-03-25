@@ -16,7 +16,7 @@ export class EmployeeService {
   }
   URL = 'http://127.0.0.1:8000/api/employee/requests/'
   getData(): Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -25,7 +25,7 @@ export class EmployeeService {
   }
 
   delete_request(request_id:number): Observable<any> {
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -34,7 +34,7 @@ export class EmployeeService {
   }
 
   getLoggedInEmployeeDetails(): Observable<any> {
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -43,7 +43,7 @@ export class EmployeeService {
   }
 
   submitTravelRequest(data:any): Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -53,7 +53,7 @@ export class EmployeeService {
   }
 
   getTravelRequest(request_id:number):Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }
@@ -62,7 +62,7 @@ export class EmployeeService {
   }
 
   updateTravelRequest(request_id:number,value:any):Observable<any>{
-    let token = this.getToken();
+    const token = this.getToken();
     if (!token) {
       console.error("No token found in localStorage");
     }

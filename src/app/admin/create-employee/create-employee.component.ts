@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { LoginService } from '../../services/login.service';
@@ -8,7 +8,7 @@ import { LoginService } from '../../services/login.service';
   templateUrl: './create-employee.component.html',
   styleUrl: './create-employee.component.css'
 })
-export class CreateEmployeeComponent {
+export class CreateEmployeeComponent implements OnInit {
   employeeForm!: FormGroup;
   data: any;
   employeeName: string | undefined;

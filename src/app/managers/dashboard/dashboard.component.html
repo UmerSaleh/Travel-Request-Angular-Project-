@@ -87,11 +87,11 @@
             </td>
             <td class="action-buttons">
               <button class="btn btn-outline-dark me-1" aria-label="View Request" (click)="view(request.id)">View</button>
-              <button class="btn btn-outline-danger me-1" *ngIf="request.status_of_request == 'submitted' || (request.status_of_request == 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'reject')" data-bs-toggle="modal" data-bs-target="#Rejection"
+              <button class="btn btn-outline-danger me-1" *ngIf="request.status_of_request === 'submitted' || (request.status_of_request === 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'reject')" data-bs-toggle="modal" data-bs-target="#Rejection"
                 aria-label="Reject Request">Reject</button>
-              <button class="btn btn-outline-dark me-1" *ngIf="request.status_of_request == 'submitted' || (request.status_of_request == 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'revert')" data-bs-toggle="modal" data-bs-target="#Revert"
+              <button class="btn btn-outline-dark me-1" *ngIf="request.status_of_request === 'submitted' || (request.status_of_request === 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'revert')" data-bs-toggle="modal" data-bs-target="#Revert"
                 aria-label="Revert Request">Revert</button>
-              <button class="btn btn-outline-success" *ngIf="request.status_of_request == 'submitted' || (request.status_of_request == 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'approve')" data-bs-toggle="modal" data-bs-target="#Approve"
+              <button class="btn btn-outline-success" *ngIf="request.status_of_request === 'submitted' || (request.status_of_request === 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'approve')" data-bs-toggle="modal" data-bs-target="#Approve"
                 aria-label="Approve Request">Approve</button>
             </td>
           </tr>
