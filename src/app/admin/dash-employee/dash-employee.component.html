@@ -4,11 +4,11 @@
         <div class="container-fluid">
             <!-- Dropdown Menu -->
             <div class="nav-item dropdown text-light">
-                <a class="nav-link text-light" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-bars fs-5"
+                <a class="nav-link text-light" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-bars fs-6"
                         aria-hidden="true"></i>&nbsp; <span class=".d-sm-none .d-md-block">Employee
                         Configuration</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" >Employee Configuration</a></li>
+                    <li><a class="dropdown-item" routerLink="/admin/employee-dashboard/">Employee Configuration</a></li>
                     <li><a class="dropdown-item" routerLink="/admin/dashboard/" >Travel Requests</a></li>
                 </ul>
             </div>
@@ -18,7 +18,7 @@
                 <div class="dropdown">
                     <a class="btn dropdown-toggle text-light opacity-100" role="button" id="adminMenu"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        Admin &nbsp;&nbsp;<i class="fa fa-user fs-4 " aria-hidden="true"></i>
+                        Administrator &nbsp;&nbsp;<i class="fa fa-user fs-4 " aria-hidden="true"></i>
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="adminMenu">
@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ employee.user?.first_name || employee.user.username }} {{ employee.user?.last_name || ' ' }}</h5>
+                                    <h5 class="card-title">{{ employee.user?.first_name || employee.user?.username }} {{ employee.user?.last_name || ' ' }}</h5>
                                     <p class="card-text"><small class="text-muted">{{ employee.is_manager ? 'Manager' : 'Employee' }}</small></p>
                                 </div>
                             </div>

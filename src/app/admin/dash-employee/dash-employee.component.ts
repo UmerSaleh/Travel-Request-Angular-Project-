@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
   styleUrl: './dash-employee.component.css'
 })
 export class DashEmployeeComponent implements OnInit {
-  employee_data: any;
+  employee_data: any[] = [];
   selectedEmployeeId: number | null = null;
 
 
@@ -21,7 +21,7 @@ export class DashEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.adminService.getEmployeeData().subscribe({
       next: (data) => {
-        this.employee_data = data; 
+        this.employee_data = data || [];
       },
       error: (error) => {
         console.error('Error fetching data', error);  // Log error message
@@ -40,7 +40,7 @@ export class DashEmployeeComponent implements OnInit {
 
   processEmployees(){
     const params = {
-      search_name: this.searchName.value,
+      search_name: this.searchName.value || '',
     };
 
     this.adminService.processEmployees(params).subscribe(

@@ -27,44 +27,52 @@
     </section>
     <!-- Travel Requests Table -->
     <section class="table-responsive mt-4 mx-auto" aria-label="Travel Requests Table">
-      <table class="table table-hover text-center">
-        <thead>
-          <tr class="table-secondary border-1">
-            <th>Date of request</th>
-            <th>Purpose</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Status</th>
-            <th>Manager</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let request of request_data">
-            <td>{{ request.date_of_request | date: 'shortDate' }}</td>
-            <td>{{ request.purpose_of_travel }}</td>
-            <td>{{ request.from_where }}</td>
-            <td>{{ request.to_where }}</td> 
-            <td>{{ request.status_of_request }} 
-              <span class="text-light bg-success rounded-pill border p-1" 
-                *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 1 && request.status_of_request === 'reverted'">
-                Resubmitted
-              </span>
-              
-              <span class="text-light bg-warning rounded-pill border p-1" 
-                *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 0 && request.status_of_request === 'reverted'">
-                Please Resubmit
-              </span>            
-            </td>
-            <td>{{ request.manager.user.username }} {{ request.manager.user.last_name }}</td>
-            <td class="action-buttons ">
-              <button class="btn btn-outline-success me-2" (click)="edit(request.id)"  aria-label="View/Edit Request">View/Edit</button>
-              <button class="btn btn-outline-danger" (click)="save_id(request.id)" data-bs-toggle="modal" data-bs-target="#delete"
-                aria-label="Delete Request">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrapper rounded-3 overflow-hidden">
+        <table class="table table-hover text-center table-bordered">
+          <thead>
+            <tr class="table-secondary border-1">
+              <th>Date of request</th>
+              <th>Purpose</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Status</th>
+              <th>Manager</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let request of request_data">
+              <td>{{ request.date_of_request | date: 'shortDate' }}</td>
+              <td>{{ request.purpose_of_travel }}</td>
+              <td>{{ request.from_where }}</td>
+              <td>{{ request.to_where }}</td> 
+              <td [ngClass]="{
+                'text-success': request.status_of_request === 'approved',
+                'text-danger': request.status_of_request === 'rejected',
+                'text-warning': request.status_of_request === 'reverted',
+                'text-info': request.status_of_request === 'submitted',
+                'text-secondary': request.status_of_request === 'closed'
+                  }">{{ request.status_of_request }} 
+                <span class="text-light bg-success rounded-pill border p-1" 
+                  *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 1 && request.status_of_request === 'reverted'">
+                  Resubmitted
+                </span>
+                
+                <span class="text-light bg-warning rounded-pill border p-1" 
+                  *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 0 && request.status_of_request === 'reverted'">
+                  Please Resubmit
+                </span>            
+              </td>
+              <td>{{ request.manager?.user?.first_name }} {{ request.manager?.user?.last_name }}</td>
+              <td class="action-buttons ">
+                <button class="btn btn-outline-success me-2" (click)="edit(request.id)"  aria-label="View/Edit Request">View/Edit</button>
+                <button class="btn btn-outline-danger" (click)="save_id(request.id)" data-bs-toggle="modal" data-bs-target="#delete"
+                  aria-label="Delete Request">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   </main>
 

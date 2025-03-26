@@ -105,12 +105,15 @@
         <label for="travelMode" class="col-sm-2 col-form-label">Mode of Travel : </label>
         <div class="col-sm-10">
           <select class="form-control" id="travelMode" formControlName="mode_of_travel" aria-label="Select mode of travel">
-            <option selected>Choose...</option>
+            <option disabled selected>Choose...</option>
             <option value="flight">On Flight</option>
             <option value="train">On Train</option>
             <option value="own vehicle">On own Vehicle</option>
             <option value="ship">On Ship</option>
           </select>
+          <div *ngIf="travelRequestForm.get('mode_of_travel')?.invalid && travelRequestForm.get('mode_of_travel')?.touched" class="alert alert-danger">
+            Required.
+          </div>
         </div>
       </div>
       <!-- Manager Name (Read-only Field) -->

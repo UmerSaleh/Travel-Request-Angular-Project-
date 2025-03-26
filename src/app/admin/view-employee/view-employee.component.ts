@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class ViewEmployeeComponent implements OnInit {
   employeeStatus: string | undefined;
   managers: any
 
-  constructor(private adminService:AdminService, private route:ActivatedRoute, private loginService:LoginService){}
+  constructor(private adminService:AdminService, private route:ActivatedRoute, private loginService:LoginService, private router:Router){}
 
   ngOnInit(): void{
     this.getManagers()
@@ -103,6 +103,7 @@ export class ViewEmployeeComponent implements OnInit {
         this.adminService.deleteEmployee(this.employeeId).subscribe({
           next: () => {
             console.log('Travel request deleted successfully!');
+            this.router.navigate(['/admin/employee-dashboard']);
           },
           error: () => {
             console.error('Error updating request:');

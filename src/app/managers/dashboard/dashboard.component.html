@@ -53,50 +53,57 @@
     </form>
 
 
-    <!-- table of travel requests -->
     <div class="table-responsive mt-4 mx-auto" aria-label="Travel Requests Table">
-      <table class="table tabel-hover text-center">
-        <thead class="table-secondary border-1">
-          <tr>
-            <th>Date of request</th>
-            <th>Name</th>
-            <th>Purpose</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let request of request_data">
-            <td>{{ request.date_of_request | date: 'shortDate' }}</td>
-            <td>{{ request.employee.user.username}} {{ request.employee.user.first_name}} {{ request.employee.user.last_name}}</td>
-            <td>{{ request.purpose_of_travel }}</td>
-            <td>{{ request.from_where }}</td>
-            <td>{{ request.to_where }}</td>
-            <td>{{ request.status_of_request }}
-              <span class="text-light bg-success rounded-pill border p-1" 
-                *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 1 && request.status_of_request === 'reverted'">
-                Resubmitted
-              </span>
-              
-              <span class="text-light bg-warning rounded-pill border p-1" 
-                *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 0 && request.status_of_request === 'reverted'">
-                Subject to Resubmit
-              </span>   
-            </td>
-            <td class="action-buttons">
-              <button class="btn btn-outline-dark me-1" aria-label="View Request" (click)="view(request.id)">View</button>
-              <button class="btn btn-outline-danger me-1" *ngIf="request.status_of_request === 'submitted' || (request.status_of_request === 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'reject')" data-bs-toggle="modal" data-bs-target="#Rejection"
-                aria-label="Reject Request">Reject</button>
-              <button class="btn btn-outline-dark me-1" *ngIf="request.status_of_request === 'submitted' || (request.status_of_request === 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'revert')" data-bs-toggle="modal" data-bs-target="#Revert"
-                aria-label="Revert Request">Revert</button>
-              <button class="btn btn-outline-success" *ngIf="request.status_of_request === 'submitted' || (request.status_of_request === 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'approve')" data-bs-toggle="modal" data-bs-target="#Approve"
-                aria-label="Approve Request">Approve</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- Wrapper with rounded corners -->
+      <div class="table-wrapper rounded-3 overflow-hidden">
+        <table class="table table-hover text-center table-bordered">
+          <thead class="table-secondary border-1">
+            <tr>
+              <th>Date of request</th>
+              <th>Name</th>
+              <th>Purpose</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let request of request_data">
+              <td>{{ request.date_of_request | date: 'shortDate' }}</td>
+              <td>{{ request.employee.user.username}} {{ request.employee.user.first_name}} {{ request.employee.user.last_name}}</td>
+              <td>{{ request.purpose_of_travel }}</td>
+              <td>{{ request.from_where }}</td>
+              <td>{{ request.to_where }}</td>
+              <td [ngClass]="{
+                'text-success': request.status_of_request === 'approved',
+                'text-danger': request.status_of_request === 'rejected',
+                'text-warning': request.status_of_request === 'reverted',
+                'text-info': request.status_of_request === 'submitted',
+                'text-secondary': request.status_of_request === 'closed'
+                  }"  >{{ request.status_of_request }}
+                <span class="text-light bg-success rounded-pill border p-1" 
+                  *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 1 && request.status_of_request === 'reverted'">
+                  Resubmitted
+                </span>
+                <span class="text-light bg-warning rounded-pill border p-1" 
+                  *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 0 && request.status_of_request === 'reverted'">
+                  Subject to Resubmit
+                </span>   
+              </td>
+              <td class="action-buttons">
+                <button class="btn btn-outline-dark me-1" aria-label="View Request" (click)="view(request.id)">View</button>
+                <button class="btn btn-outline-danger me-1" *ngIf="request.status_of_request === 'submitted' || (request.status_of_request === 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'reject')" data-bs-toggle="modal" data-bs-target="#Rejection"
+                  aria-label="Reject Request">Reject</button>
+                <button class="btn btn-outline-dark me-1" *ngIf="request.status_of_request === 'submitted' || (request.status_of_request === 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'revert')" data-bs-toggle="modal" data-bs-target="#Revert"
+                  aria-label="Revert Request">Revert</button>
+                <button class="btn btn-outline-success" *ngIf="request.status_of_request === 'submitted' || (request.status_of_request === 'reverted' && request.is_resubmitted == 1) " (click)="beforeAction(request.id, 'approve')" data-bs-toggle="modal" data-bs-target="#Approve"
+                  aria-label="Approve Request">Approve</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </main>
 

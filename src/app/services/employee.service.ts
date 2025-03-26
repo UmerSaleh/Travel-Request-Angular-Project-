@@ -70,6 +70,4 @@ export class EmployeeService {
     return this.http.patch(`http://127.0.0.1:8000/api/employee/requests/${request_id}/edit/`, value, {headers});
   }
 
-  
-
 }

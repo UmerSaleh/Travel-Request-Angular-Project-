@@ -124,10 +124,4 @@ export class AdminService {
     const headers = new HttpHeaders().set('Authorization',`Token ${token}`);
     return this.http.delete(`http://127.0.0.1:8000/api/admin/employees/${employee_id}/`,{headers})
   }
-
-
-
-
-
 }
-// b84dad4aa0c8f02e592196dde04569a44275e136

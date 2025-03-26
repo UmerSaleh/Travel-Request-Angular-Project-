@@ -5,7 +5,7 @@
             <!-- Sidebar Toggle Dropdown -->
             <div class="nav-item dropdown text-light">
                 <a class="nav-link text-light" role="button" data-bs-toggle="dropdown"><i class=" fa fa-bars fs-6"
-                        aria-hidden="true"></i> &nbsp; Travel Requests</a>
+                        aria-hidden="true"></i> &nbsp;Travel Requests</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" routerLink="/admin/employee-dashboard/">Employee Configuration</a></li>
                     <li><a class="dropdown-item">Travel Requests</a></li>
@@ -43,22 +43,6 @@
 
 </div>
 <main class="container">
-
-  <!-- <h2 class="text-center mb-4">Admin Dashboard</h2>
-  
-    Navigation Buttons -->
-    <!-- <div class="row justify-content-center">
-      <div class="col-md-4 mb-4">
-        <a href="/admin/travel-requests" class="btn btn-lg btn-primary w-100">Travel Requests Dashboard</a>
-      </div>
-      <div class="col-md-4 mb-4">
-        <a href="/admin/employee-configuration" class="btn btn-lg btn-success w-100">Employee Configuration</a>
-      </div>
-    </div>
-    <section class="mt-5 text-center">
-      <p>Welcome, Admin! You can manage travel requests, employee configurations, and more.</p>
-    </section>   -->
-    <!-- Search & Filter Section -->
     <section class="row mt-3">
         <form class="d-flex col-md-12 mx-auto mt-3">
             <input class="form-control me-2" type="search" [formControl]="searchName" (keydown.enter)="onEnter($event)" placeholder="Search" aria-label="Search">
@@ -93,7 +77,8 @@
     </section>
     <!-- Travel Requests Table -->
     <section class="table-responsive mt-4 mx-auto" aria-label="Travel Request Table">
-        <table class="table tabel-hover text-center">
+        <div class="table-wrapper rounded-3 overflow-hidden">
+          <table class="table table-hover text-center table-bordered">
             <thead class="table-secondary border-1">
                 <tr>
                     <th>Date of request</th>
@@ -112,7 +97,13 @@
                     <td>{{ request.purpose_of_travel }}</td>
                     <td>{{ request.from_where || ' ' }}</td>
                     <td>{{ request.to_where || ' ' }}</td>
-                    <td>{{ request.status_of_request || ' ' }}
+                    <td [ngClass]="{
+                      'text-success': request.status_of_request === 'approved',
+                      'text-danger': request.status_of_request === 'rejected',
+                      'text-warning': request.status_of_request === 'reverted',
+                      'text-info': request.status_of_request === 'submitted',
+                      'text-secondary': request.status_of_request === 'closed'
+                        }" >{{ request.status_of_request || ' ' }}
                         <span class="text-light bg-success rounded-pill border p-1" 
                             *ngIf="request.resubmission_request == 1 && request.is_resubmitted == 1 && request.status_of_request === 'reverted'">
                             Resubmitted
@@ -131,6 +122,7 @@
                 </tr>
             </tbody>
         </table>
+        </div>
     </section>  
 </main>
 

@@ -12,8 +12,8 @@ import { FormControl } from '@angular/forms';
 export class DashboardComponent implements OnInit {
   request_data: any
   manager_name: string | undefined;
-  selectedRequestId: number | any;
-  action: string | any;
+  selectedRequestId: number | undefined;
+  action: string | undefined;
 
   searchName = new FormControl('');
   statusFilter = new FormControl('');

@@ -11,9 +11,9 @@ import { LoginService } from '../../services/login.service';
 export class CreateEmployeeComponent implements OnInit {
   employeeForm!: FormGroup;
   data: any;
-  employeeName: string | undefined;
-  managers: any;
-  created: boolean | any = false;
+  employeeName?: string;
+  managers: any[] = [];
+  created = false;
 
   constructor(private adminService:AdminService, private loginService:LoginService){}
 
@@ -22,7 +22,7 @@ export class CreateEmployeeComponent implements OnInit {
     this.employeeForm = new FormGroup({
       first_name: new FormControl('',Validators.required),
       last_name: new FormControl('',Validators.required ),
-      email: new FormControl('', ),
+      email: new FormControl('',Validators.email ),
       is_manager: new FormControl('',Validators.required),
       username: new FormControl('',Validators.required),
       password1: new FormControl('',Validators.required),

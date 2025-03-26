@@ -10,7 +10,7 @@ import { LoginService } from '../../services/login.service';
     styleUrl: './dashboard.component.css'
   })
   export class DashboardComponent implements OnInit {
-    request_data: any
+    request_data: any;
     employee_name: string | undefined;
     selectedRequestId: number | null = null;
     
@@ -25,7 +25,7 @@ import { LoginService } from '../../services/login.service';
         next: (data) => {
           this.request_data = data;
           if (this.request_data && this.request_data.length > 0) {
-            this.employee_name = this.request_data[0].employee.user.username;
+            this.employee_name = this.request_data?.[0]?.employee?.user?.username;
           }
         },
         error: (error) => {
@@ -61,20 +61,5 @@ import { LoginService } from '../../services/login.service';
     logout(): void {
       this.loginService.logout()
     }
-
-    // logout(): void {
-    
-    //   const title = localStorage.getItem('title');
-    //   if (title === 'Employee Portal') {
-    //     this.router.navigate(['/employees/login']);
-    //   } else if (title === 'Manager Portal') {
-    //     this.router.navigate(['/managers/login']);
-    //   } else if (title === 'Admin Portal') {
-    //     this.router.navigate(['/admin/login']);
-    //   }
-  
-    // }
-    
-    
     
   }

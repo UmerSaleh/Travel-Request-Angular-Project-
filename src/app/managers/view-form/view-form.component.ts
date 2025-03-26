@@ -12,7 +12,6 @@ import { LoginService } from '../../services/login.service';
 export class ViewFormComponent implements OnInit {
     travelRequestForm!: FormGroup;
     data: any;
-    employeeName: string | undefined;
     managerName:string | undefined;
     requestId: number | any;
     status: string | undefined;

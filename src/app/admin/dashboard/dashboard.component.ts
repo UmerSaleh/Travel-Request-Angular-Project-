@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
-    request_data: any;
+    request_data: any[] = [];
     selectedRequestId: number | any;
 
     searchName = new FormControl('');
@@ -18,14 +18,14 @@ export class DashboardComponent implements OnInit {
     sortBy = new FormControl('');
     startDate = new FormControl('');
     endDate = new FormControl('');     
-    action: string | any;
+    action = '';
   
     constructor(private adminService: AdminService, private router:Router, private loginService:LoginService){}
   
     ngOnInit(): void {
       this.adminService.getData().subscribe({
         next: (data) => {
-          this.request_data = data; 
+          this.request_data = data || [];
           console.log(this.request_data)
         },
         error: (error) => {

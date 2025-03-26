@@ -31,6 +31,14 @@
     color: #31708e !important;
 }
 
+.text-info{
+    color: #40748d !important;
+}
+.text-warning{
+    color: #c8b100 !important;
+}
+
+
 
 
 .btn-success:hover, 

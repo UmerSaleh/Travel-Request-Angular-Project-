@@ -28,7 +28,7 @@ export class RequestFormComponent implements OnInit {
       to_date: new FormControl('', [Validators.required, this.dateRangeValidator.bind(this)]),
       from_where: new FormControl('', Validators.required),
       to_where: new FormControl('', Validators.required),
-      mode_of_travel: new FormControl(''),
+      mode_of_travel: new FormControl('', Validators.required),
       manager: new FormControl(''),
       additional_request: new FormControl(''),
       lodging: new FormControl('', Validators.required),
@@ -59,28 +59,33 @@ export class RequestFormComponent implements OnInit {
   }
   
   dateRangeValidator(control: AbstractControl): ValidationErrors | null {
-    const fromDate = this.travelRequestForm?.get('from_date')?.value;
+    if (!control.parent) return null; // Ensure parent form is available
+  
+    const fromDate = control.parent.get('from_date')?.value;
     const toDate = control.value;
-
+  
     if (fromDate && toDate && new Date(fromDate) >= new Date(toDate)) {
-      return { dateInvalid: true }; // Return an error
+      return { dateInvalid: true }; 
     }
-    return null; // No error
+    return null; 
   }
 
 
 
   submitRequest(): void {
     this.travelRequestForm.markAllAsTouched();
+
+
     if (this.travelRequestForm.valid) {
+      this.status = "submitted";
       console.log('Submitting Data:', this.travelRequestForm.value); 
       this.employeeService.submitTravelRequest(this.travelRequestForm.value).subscribe({
         next: (response) => {
           console.log('Response:', response);
-          this.status = "submitted"
         },
         error: (error) => {
           console.error('Error',error);
+          this.status = "to_submit"
           console.log('Failed to submit request');
         }
       });
